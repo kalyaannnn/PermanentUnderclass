@@ -1,0 +1,55 @@
+syntax = "proto3";
+package lagrl.sandbox.v1;
+
+service Sandbox {
+  rpc CreateSession(CreateSessionRequest) returns (Session);
+  rpc Execute(ExecuteRequest) returns (ExecutionReference);
+  rpc GetExecution(ExecutionReference) returns (ExecutionResult);
+  rpc DestroySession(DestroySessionRequest) returns (DestroySessionResult);
+}
+
+message ResourceLimits {
+  uint64 cpu_millis = 1;
+  uint64 memory_bytes = 2;
+  uint32 max_processes = 3;
+  uint32 max_concurrent_executions = 4;
+}
+message CreateSessionRequest {
+  string environment = 1;
+  ResourceLimits limits = 2;
+  double lease_seconds = 3;
+}
+message Session {
+  string session_id = 1;
+  string environment = 2;
+  ResourceLimits limits = 3;
+  double created_at = 4;
+  double expires_at = 5;
+  string state = 6;
+  string workspace_ref = 7;
+}
+message ExecuteRequest {
+  string session_id = 1;
+  string execution_id = 2;
+  repeated string argv = 3;
+  double command_deadline = 4;
+  uint64 output_limit_bytes = 5;
+}
+message ExecutionReference {
+  string session_id = 1;
+  string execution_id = 2;
+}
+message ExecutionResult {
+  ExecutionReference reference = 1;
+  string state = 2;
+  bytes stdout = 3;
+  bytes stderr = 4;
+  optional int32 exit_code = 5;
+  double accepted_at = 6;
+  optional double started_at = 7;
+  optional double finished_at = 8;
+  string failure_category = 9;
+  bool output_truncated = 10;
+}
+message DestroySessionRequest { string session_id = 1; }
+message DestroySessionResult { bool released = 1; }

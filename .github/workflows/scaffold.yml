@@ -1,0 +1,17 @@
+name: CPU scaffold
+on: [push, pull_request]
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.23"
+          python-version: "3.11"
+      - run: uv sync --locked
+      - run: uv run --locked pytest
+      - run: uv run --locked lagrl smoke --backend fake --config configs/cpu.yaml
+      - run: uv run --locked ruff check .
+      - run: uv run --locked ruff format --check .
+      - run: uv run --locked python scripts/generate_proto.py --check

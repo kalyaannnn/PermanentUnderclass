@@ -1,0 +1,23 @@
+{
+  "label": "prerecorded fixture; command was not executed by lagrl",
+  "create_request": {
+    "environment": "python-minimal",
+    "limits": {"cpu_millis": 1000, "memory_bytes": 67108864, "max_processes": 8, "max_concurrent_executions": 1},
+    "lease_seconds": 30.0
+  },
+  "session": {
+    "session_id": "fixture-session", "environment": "python-minimal",
+    "limits": {"cpu_millis": 1000, "memory_bytes": 67108864, "max_processes": 8, "max_concurrent_executions": 1},
+    "created_at": 100.0, "expires_at": 130.0, "state": "active", "workspace_ref": "fixture://workspace"
+  },
+  "execute_request": {
+    "session_id": "fixture-session", "execution_id": "fixture-execution",
+    "argv": ["python", "-c", "print(2 + 2)"], "command_deadline": 110.0, "output_limit_bytes": 128
+  },
+  "result": {
+    "reference": {"session_id": "fixture-session", "execution_id": "fixture-execution"},
+    "state": "succeeded", "stdout": "4\n", "stderr": "", "exit_code": 0,
+    "accepted_at": 100.0, "started_at": 100.25, "finished_at": 100.5,
+    "failure_category": "none", "output_truncated": false
+  }
+}

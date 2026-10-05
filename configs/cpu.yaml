@@ -1,0 +1,17 @@
+# Wiring demonstration only. No training, models, GPUs, or command execution.
+sandbox:
+  host: 127.0.0.1
+  port: 0
+  rpc_timeout_seconds: 3.0
+  max_message_bytes: 1048576
+  max_concurrent_rpcs: 4
+logging:
+  path: artifacts/smoke.jsonl
+training:
+  group_size: 2
+  normalization_epsilon: 0.000001
+  clip_epsilon: 0.2
+  kl_coefficient: 0.0
+coordination:
+  buffer_capacity: 2
+  max_policy_lag: 1
